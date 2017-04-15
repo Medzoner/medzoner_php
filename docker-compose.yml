@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+    #php
+    php-medzoner:
+        image: "."
+        container_name: "medzoner_php"
+        working_dir: "${PATHBASE}"
+        restart: "always"
+        environment:
+          USER_UID: "${USER_UID}"
+          USER_GID: "${USER_GID}"
+          XDEBUG_CONFIG: "${XDEBUG_CONFIG}"
+          PHP_IDE_CONFIG: "${PHP_IDE_CONFIG}"
+        volumes:
+            - "${PATH_PROJECTS}:/var/www"
+            # ssh git auth
+            - "$SSH_AUTH_SOCK:/ssh-agent"
+            - "~/.ssh/id_rsa:/home/www-data/private_key"
+            # bitbucket auth
+            - "${HOME_PATH}/.ssh:/home/www-data/.ssh"
+            - "${HOME_PATH}/.composer:/home/www-data/.composer"
+            # php conf by env
+            - "./etc/php/7.0/php.${STAGING_ENV}.ini:/usr/local/etc/php/conf.d/php.ini"
+            - "./etc/php/7.0/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini"
+            - "./etc/php/7.0/php-fpm.d/docker.conf:/usr/local/etc/php-fpm.d/docker.conf"
+
+volumes:
+    db: {}
