@@ -20,6 +20,4 @@ chown www-data:www-data -R /usr/local/bin/composer
 eval $(ssh-agent -s)
 ssh-add $SSH_PRIVATE_KEY
 
-ln -s /usr/bin/nodejs /usr/bin/node
-
 exec "$@"
