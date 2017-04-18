@@ -48,6 +48,7 @@ RUN docker-php-ext-install mcrypt bcmath intl pdo_mysql \
     && docker-php-ext-install opcache \
     && docker-php-ext-install soap \
     && docker-php-ext-install exif \
+    && docker-php-ext-install xsl \
     && docker-php-ext-install zip \
     && pecl install imagick-beta \
     && docker-php-ext-enable imagick \
