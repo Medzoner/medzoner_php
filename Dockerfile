@@ -27,6 +27,7 @@ RUN apt-get update && \
         libpng12-dev \
         libfreetype6-dev \
         libssl-dev \
+        libxslt \
         # for mcrypt extension
         libmcrypt-dev \
         libmagickwand-dev \
