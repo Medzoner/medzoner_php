@@ -4,6 +4,8 @@ ENV STAGING_ENV prod
 
 ENV USER_UID 1000
 ENV USER_GID 1000
+RUN usermod -u 1000 www-data
+
 ENV SSH_AUTH_SOCK /ssh-agent
 ENV SSH_PRIVATE_KEY /home/www-data/private_key
 
@@ -59,8 +61,6 @@ RUN docker-php-ext-install mcrypt bcmath intl pdo_mysql \
 ###xdebug
 ENV XDEBUG_VERSION 2.4.1
 RUN pecl install channel://pecl.php.net/xdebug-${XDEBUG_VERSION}
-
-RUN usermod -u 1000 www-data
 
 # Time Zone
 RUN echo "Europe/Paris" > /etc/timezone
