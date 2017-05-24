@@ -15,6 +15,7 @@ touch /usr/local/var/log/php-fpm.log && chown www-data:www-data /usr/local/var/l
 #composer permissions (cache)
 chown www-data:www-data -R /usr/local/bin/composer
 
+chown www-data:www-data -R /home/www-data
 
 #add private ssh
 eval $(ssh-agent -s)
