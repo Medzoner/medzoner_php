@@ -33,7 +33,10 @@ RUN apt-get update && \
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends supervisor \
-    && rm -r /var/lib/apt/lists/*
+    && rm -r /var/lib/apt/lists/* && \
+    sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf
+VOLUME ["/etc/supervisor/conf.d"]
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
 RUN cd /tmp && wget http://curl.haxx.se/ca/cacert.pem && mv /tmp/cacert.pem /usr/lib/ssl/cert.pem
 
