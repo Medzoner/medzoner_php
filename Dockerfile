@@ -16,8 +16,6 @@ RUN apt-get update && \
         git \
         ntp \
         nano \
-        nodejs \
-        npm \
         openssh-client \
         # for intl extension
         libicu-dev \
@@ -32,6 +30,10 @@ RUN apt-get update && \
         libmcrypt-dev \
         libmagickwand-dev \
         && rm -r /var/lib/apt/lists/*
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends supervisor \
+    && rm -r /var/lib/apt/lists/*
 
 RUN cd /tmp && wget http://curl.haxx.se/ca/cacert.pem && mv /tmp/cacert.pem /usr/lib/ssl/cert.pem
 
