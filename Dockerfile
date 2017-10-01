@@ -61,6 +61,9 @@ RUN docker-php-ext-install mcrypt bcmath intl pdo_mysql \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
     && chmod +x /usr/local/bin/composer
 
+RUN pecl install mongodb
+RUN echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
+
 ###xdebug
 ENV XDEBUG_VERSION 2.4.1
 RUN pecl install channel://pecl.php.net/xdebug-${XDEBUG_VERSION}
