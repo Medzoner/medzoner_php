@@ -65,7 +65,7 @@ RUN pecl install mongodb
 RUN echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
 
 ###xdebug
-ENV XDEBUG_VERSION 2.4.1
+ENV XDEBUG_VERSION 2.5.5
 RUN pecl install channel://pecl.php.net/xdebug-${XDEBUG_VERSION}
 
 RUN usermod -u 1000 www-data
