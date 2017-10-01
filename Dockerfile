@@ -1,4 +1,4 @@
-FROM php:7.1-fpm
+FROM php:7.0-fpm
 
 ENV STAGING_ENV prod
 
@@ -65,7 +65,7 @@ RUN pecl install mongodb
 RUN echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongodb.ini
 
 ###xdebug
-RUN pecl install channel://pecl.php.net/xdebug-2.5.5
+RUN pecl install channel://pecl.php.net/xdebug-2.4.1
 
 RUN usermod -u 1000 www-data
 
