@@ -56,7 +56,6 @@ RUN docker-php-ext-install mcrypt bcmath intl pdo_mysql \
     && docker-php-ext-install exif \
     && docker-php-ext-install xsl \
     && docker-php-ext-install zip \
-    && docker-php-pecl-install mongo \
     && pecl install imagick-beta \
     && docker-php-ext-enable imagick \
     && php -r "readfile('https://getcomposer.org/installer');" | php -- --install-dir=/usr/local/bin --filename=composer \
