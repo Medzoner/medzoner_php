@@ -30,12 +30,11 @@ RUN apt-get update && \
         # for mcrypt extension
         libmcrypt-dev \
         libmagickwand-dev \
-        && rm -r /var/lib/apt/lists/*
+        supervisor \
+        subversion make g++ python chrpath \
+        && rm -r /var/lib/apt/lists/* && \
+        sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends supervisor \
-    && rm -r /var/lib/apt/lists/* && \
-    sed -i 's/^\(\[supervisord\]\)$/\1\nnodaemon=true/' /etc/supervisor/supervisord.conf
 VOLUME ["/etc/supervisor/conf.d"]
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
 
@@ -78,25 +77,6 @@ RUN echo "date.timezone=${PHP_TIMEZONE:-UTC}" > $PHP_INI_DIR/conf.d/date_timezon
 
 # Memory Limit
 RUN echo "memory_limit=-1" > $PHP_INI_DIR/conf.d/memory-limit.ini
-
-
-# install dependencies
-RUN apt-get update
-RUN apt-get -y install git subversion make g++ python curl chrpath && apt-get clean
-
-# depot tools
-RUN git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git /usr/local/depot_tools
-ENV PATH $PATH:/usr/local/depot_tools
-
-# install v8
-RUN cd /usr/local/src && fetch v8 && \
-    cd /usr/local/src/v8 && make native library=shared snapshot=off -j4 && \
-    mkdir -p /usr/local/lib && \
-    cp /usr/local/src/v8/out/native/lib.target/lib*.so /usr/local/lib && \
-    echo "create /usr/local/lib/libv8_libplatform.a\naddlib /usr/local/src/v8/out/native/obj.target/tools/gyp/libv8_libplatform.a\nsave\nend" | ar -M && \
-    cp -R /usr/local/src/v8/include /usr/local && \
-    chrpath -r '$ORIGIN' /usr/local/lib/libv8.so && \
-    rm -fR /usr/local/src/v8
 
 #entry point
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
